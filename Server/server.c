@@ -18,7 +18,9 @@ void main(int argc, char** argv){
 
 	if((sockfd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
 	{
-		printf("Socket failed\n");
+		//printf("Socket failed\n");
+		perror("socket");
+		return;
 	}
 	else
 	{
@@ -32,16 +34,18 @@ void main(int argc, char** argv){
 	
 	printf("COBA\n");
 	
-	if(bind(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0)
+	if(bind(sockfd, (struct sockaddr *)&servaddr, sizeof(struct sockaddr)) < 0)
 	{
-		printf("Bind failed\n");
+		// printf("Bind failed\n");
+		perror("bind");
+		return;
 	}
 	else
 	{
-		printf("Bind to port %s\n", servaddr.sin_port);
+		printf("Bind to port %d\n", servaddr.sin_port);
 	}
 	
-	printf("COBA\n");
+	printf("COBA2\n");
 	
 	if(listen(sockfd, 5) < 0)
 	{
@@ -52,7 +56,7 @@ void main(int argc, char** argv){
 		printf("Listening to client\n");
 	}
 	
-	printf("COBA\n");
+	printf("COBA3\n");
 	
 	for(;;)
 	{
