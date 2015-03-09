@@ -16,6 +16,7 @@ void main(int argc, char** argv){
 	int clisize;
 	struct sockaddr_in servaddr, cliaddr;
 
+	// open Socket
 	if((sockfd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
 	{
 		//printf("Socket failed\n");
@@ -34,6 +35,7 @@ void main(int argc, char** argv){
 	
 	printf("COBA\n");
 	
+	// bind port
 	if(bind(sockfd, (struct sockaddr *)&servaddr, sizeof(struct sockaddr)) < 0)
 	{
 		// printf("Bind failed\n");
@@ -47,6 +49,7 @@ void main(int argc, char** argv){
 	
 	printf("COBA2\n");
 	
+	// listen for connection
 	if(listen(sockfd, 5) < 0)
 	{
 		printf("Listen failed\n");
@@ -64,7 +67,8 @@ void main(int argc, char** argv){
 	
 		clisize = sizeof(cliaddr);
 		
-		if((sockcli = accept(sockfd, (struct sockaddr *)&cliaddr, &clisize)) < 0)
+		//if((sockcli = accept(sockfd, (struct sockaddr *)&cliaddr, &clisize)) < 0)
+		if((sockcli = accept(sockfd, (struct sockaddr *)NULL, NULL)) < 0)
 		{
 			printf("Accept failed\n");
 		}
