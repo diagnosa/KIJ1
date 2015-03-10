@@ -13,71 +13,51 @@
 
 void main(int argc, char** argv){
 	int sockfd, sockcli;
-	int clisize;
+	int retval, clisize=0;
 	struct sockaddr_in servaddr, cliaddr;
 
-	// open Socket
-	if((sockfd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
-	{
-		//printf("Socket failed\n");
-		perror("socket");
-		return;
-	}
-	else
-	{
-		printf("Socket created\n");
-	}
-	
-	memset(&servaddr, 0, sizeof(servaddr));
+	sockfd = socket(AF_INET, SOCK_STREAM, 0); //hanya untk proses listen
 	servaddr.sin_family = AF_INET;
-	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
 	servaddr.sin_port = htons(6064);
-	
-	printf("COBA\n");
-	
-	// bind port
-	if(bind(sockfd, (struct sockaddr *)&servaddr, sizeof(struct sockaddr)) < 0)
-	{
-		// printf("Bind failed\n");
-		perror("bind");
-		return;
+	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
+
+	retval= bind(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
+	if(retval < 0){
+		perror(strerror(errno));
+		exit(1);
 	}
-	else
-	{
-		printf("Bind to port %d\n", servaddr.sin_port);
+	printf("Server mengikat port 6064\n");
+	retval = listen(sockfd, 5);
+	printf("Server menunggu panggilan....\n");
+
+	bzero(&cliaddr, sizeof(cliaddr));
+	clisize= 0;
+	sockcli = accept(sockfd, (struct sockaddr *)&cliaddr, &clisize);
+	printf("ada panggilan");
+	if(sockcli<0){
+		perror(strerror(errno));
+		exit(-1);
 	}
-	
-	printf("COBA2\n");
-	
-	// listen for connection
-	if(listen(sockfd, 5) < 0)
-	{
-		printf("Listen failed\n");
-	}
-	else
-	{
-		printf("Listening to client\n");
-	}
-	
-	printf("COBA3\n");
-	
-	for(;;)
-	{
-		memset(&cliaddr, 0, sizeof(cliaddr));
-	
-		clisize = sizeof(cliaddr);
-		
-		//if((sockcli = accept(sockfd, (struct sockaddr *)&cliaddr, &clisize)) < 0)
-		if((sockcli = accept(sockfd, (struct sockaddr *)NULL, NULL)) < 0)
-		{
-			printf("Accept failed\n");
-		}
-		else
-		{
-			printf("Ada panggilan dari %s\n", inet_ntoa(cliaddr.sin_addr));
-			
-		}
-	}
+	//BACA PESAN
+	  char str[] ="icha|sasa|lalalalala";
+	  bzero(str, 100);
+	  retval=read(sockcli, str, 99);
+	  str[retval-1]='\0';
+	  char * pch, *user, *dest, *mesg;
+	  printf ("Splitting string \"%s\" into tokens:\n",str);
+	  pch = strtok (str,"|");
+	  user = pch;
+	  printf ("user : %s\n",user);
+	  pch = strtok (NULL,"|");
+	  dest = pch;
+	  printf ("dest : %s\n",dest);
+	  pch = strtok (NULL,"|");
+	  mesg = pch;
+	  printf ("message : %s\n",mesg);
+	//TULIS PESAN
+	char msg[20] = "Selamat datang";
+	retval = write(sockcli, msg, strlen(msg));
+	printf("Terkirim\n");
+	close(sockcli);
 	close(sockfd);
 }
-
