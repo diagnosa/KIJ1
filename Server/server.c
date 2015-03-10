@@ -11,6 +11,13 @@
 #include<string.h>
 #include<stdlib.h>
 
+struct datacli
+{
+	int sockcli;
+	char *user;
+};
+
+
 void main(int argc, char** argv){
 	int sockfd, sockcli;
 	int retval, clisize=0;
@@ -18,7 +25,7 @@ void main(int argc, char** argv){
 
 	sockfd = socket(AF_INET, SOCK_STREAM, 0); //hanya untk proses listen
 	servaddr.sin_family = AF_INET;
-	servaddr.sin_port = htons(6064);
+	servaddr.sin_port = htons(6666);
 	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
 
 	retval= bind(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
@@ -26,7 +33,7 @@ void main(int argc, char** argv){
 		perror(strerror(errno));
 		exit(1);
 	}
-	printf("Server mengikat port 6064\n");
+	printf("Server mengikat port 6666\n");
 	retval = listen(sockfd, 5);
 	printf("Server menunggu panggilan....\n");
 
@@ -44,16 +51,12 @@ void main(int argc, char** argv){
 	  retval=read(sockcli, str, 99);
 	  str[retval-1]='\0';
 	  char * pch, *user, *dest, *mesg;
-	  printf ("Splitting string \"%s\" into tokens:\n",str);
 	  pch = strtok (str,"|");
 	  user = pch;
-	  printf ("user : %s\n",user);
 	  pch = strtok (NULL,"|");
 	  dest = pch;
-	  printf ("dest : %s\n",dest);
 	  pch = strtok (NULL,"|");
 	  mesg = pch;
-	  printf ("message : %s\n",mesg);
 	//TULIS PESAN
 	char msg[20] = "Selamat datang";
 	retval = write(sockcli, msg, strlen(msg));
