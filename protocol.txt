@@ -1,0 +1,12 @@
+Client to Server:
+- set username:
+ -> set_username|user_name
+- send message:
+ -> send|tujuan|isi_pesan
+
+
+Server to Client:
+- List User Online
+ -> list|user1|user2|....
+- get message:
+ -> message|dari|isi_pesan
