@@ -117,13 +117,14 @@ public class NewClientUI extends javax.swing.JFrame {
         {
             Socket client = new Socket(TFAddress.getText(), 6666);
             System.out.println("Just connected to "
-                         + client.getRemoteSocketAddress() + " " + TFUsername.getText());
+                         + client.getRemoteSocketAddress());
             OutputStream outToServer = client.getOutputStream();
             DataOutputStream out =
                           new DataOutputStream(outToServer);
 
-            out.writeUTF("Hello from "
-                         + TFUsername.getText());
+            out.write(("Hello from "
+                         + TFUsername.getText()).getBytes());
+            out.flush();
         }
         catch(IOException e)
         {

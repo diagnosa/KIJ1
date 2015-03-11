@@ -131,8 +131,13 @@ int main( int argc, char *argv[] )
       exit(1);
       }
    
-   printf("Here is the message: %s\n",buffer);
-   
+   printf("n: %d\n", n);
+   printf("Here is the message: %s\n", buffer);
+	int i;
+   for (i=0; i<n; i++) {
+   	printf("%d ", buffer[i]);
+   }
+
    /* Write a response to the client */
    n = write(newsockfd,"I got your message",18);
    
