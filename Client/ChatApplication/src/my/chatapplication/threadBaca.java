@@ -5,7 +5,14 @@
  */
 package my.chatapplication;
 
+import java.awt.List;
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -16,15 +23,29 @@ import java.net.Socket;
 public class threadBaca extends Thread{
     private Socket server;
     private String mesg;
+    private String command;
     private int connStatus;
-    public threadBaca(Socket server, int connect){
+    private BufferedInputStream bis;
+    private List listOnline ;
+    private JTextArea messageLabel ;
+    public threadBaca(Socket sockcli, int connect, List listOnline, JTextArea messageLabel){
         this.connStatus = connect;
-        this.server = server;
+        this.server = sockcli;
+        this.listOnline = listOnline;
+        this.messageLabel = messageLabel;
     }
     
     @Override
     public void run(){
         while(connStatus==1){
+            try {
+                bis = new BufferedInputStream(server.getInputStream());
+                this.mesg = bis.toString();
+                String[] isi = this.mesg.split("|");
+                this.messageLabel.append(isi[1] + " : " + isi[2]);
+            } catch (IOException ex) {
+                this.messageLabel.append("failed to receive 1 message");
+            }
            
         }
     }
