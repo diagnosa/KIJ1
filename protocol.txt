@@ -8,5 +8,5 @@ Client to Server:
 Server to Client:
 - List User Online
  -> list|user1|user2|....
-- get message:
+- send message:
  -> message|dari|isi_pesan
