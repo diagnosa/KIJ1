@@ -43,13 +43,13 @@ public class ChatApplicationUI extends javax.swing.JFrame {
         label1 = new java.awt.Label();
         list1 = new java.awt.List();
         BtnSend = new java.awt.Button();
-        BtnRefresh = new java.awt.Button();
         online = new javax.swing.JLabel();
         alamatServer = new javax.swing.JTextField();
         receiver = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        messageLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        messageLabel = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,9 +88,6 @@ public class ChatApplicationUI extends javax.swing.JFrame {
             }
         });
 
-        BtnRefresh.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        BtnRefresh.setLabel("Refresh");
-
         online.setText("Offline");
 
         alamatServer.setText("alamat server");
@@ -104,7 +101,9 @@ public class ChatApplicationUI extends javax.swing.JFrame {
 
         jLabel2.setText("Pesan");
 
-        messageLabel.setBackground(new java.awt.Color(204, 255, 204));
+        messageLabel.setColumns(20);
+        messageLabel.setRows(5);
+        jScrollPane1.setViewportView(messageLabel);
 
         javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
         jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
@@ -116,7 +115,7 @@ public class ChatApplicationUI extends javax.swing.JFrame {
                     .addGroup(jInternalFrame1Layout.createSequentialGroup()
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(messageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jInternalFrame1Layout.createSequentialGroup()
@@ -130,16 +129,16 @@ public class ChatApplicationUI extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(alamatServer)))
                     .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                        .addComponent(pesan, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BtnSend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(receiver, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BtnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                                .addComponent(pesan, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BtnSend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(receiver, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jInternalFrame1Layout.setVerticalGroup(
@@ -165,17 +164,14 @@ public class ChatApplicationUI extends javax.swing.JFrame {
                             .addGroup(jInternalFrame1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(messageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(jScrollPane1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BtnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(receiver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pesan, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(263, Short.MAX_VALUE))
+                        .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(receiver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pesan, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         BtnConnect.getAccessibleContext().setAccessibleDescription("");
@@ -206,8 +202,11 @@ public class ChatApplicationUI extends javax.swing.JFrame {
     private void BtnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConnectActionPerformed
         // TODO add your handling code here:
         username = usernameForm.getText();
-        messageLabel.setText("Lala : halo" + "\n");
         connectTo(6666);
+        if(this.con==1){
+            tb = new threadBaca(server, con, list1, messageLabel);
+            tb.run();
+        }
     }//GEN-LAST:event_BtnConnectActionPerformed
 
     private void list1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_list1ActionPerformed
@@ -234,9 +233,9 @@ public class ChatApplicationUI extends javax.swing.JFrame {
             server = new Socket(alamatServer.getText(), port);
             out = new ByteArrayOutputStream(server.getReceiveBufferSize());
             OutputStreamWriter ous = new OutputStreamWriter(server.getOutputStream());
-            tb.run();
+            this.con=1;
             } catch (IOException ex) {
-            Logger.getLogger(ChatApplicationUI.class.getName()).log(Level.SEVERE, null, ex);
+            this.con = 0;
         }
     }
     /**
@@ -277,17 +276,18 @@ public class ChatApplicationUI extends javax.swing.JFrame {
     public Socket server;
     public ByteArrayOutputStream out;
     private threadBaca tb;
+    private int con;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button BtnConnect;
-    private java.awt.Button BtnRefresh;
     private java.awt.Button BtnSend;
     private javax.swing.JTextField alamatServer;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private java.awt.Label label1;
     private java.awt.List list1;
-    private javax.swing.JLabel messageLabel;
+    private javax.swing.JTextArea messageLabel;
     private javax.swing.JLabel online;
     private javax.swing.JTextField pesan;
     private javax.swing.JTextField receiver;
