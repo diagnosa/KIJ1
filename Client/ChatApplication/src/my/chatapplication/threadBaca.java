@@ -42,9 +42,14 @@ public class threadBaca extends Thread{
                 bis = new BufferedInputStream(server.getInputStream());
                 this.mesg = bis.toString();
                 String[] isi = this.mesg.split("|");
-                this.messageLabel.append(isi[1] + " : " + isi[2]);
+                if("list".equals(isi[0])){
+                    for(int i=1; i<isi.length ;i++){
+                        this.listOnline.add(isi[i]);
+                    }
+                }    
+                else this.messageLabel.append(isi[1] + " : " + isi[2]);
             } catch (IOException ex) {
-                this.messageLabel.append("failed to receive 1 message");
+                this.messageLabel.append("failed to receive from server");
             }
            
         }
