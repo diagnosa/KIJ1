@@ -27,14 +27,23 @@ typedef struct Client
 Client *first;
 Client *last;
 
-char *getMode(char messageCome[], int size)
-{
-   
-}
-
 void broadcast_list_user()
 {
+   Client *iterator;
+   char messageGo[8192];
+   memset(messageGo, '\0', sizeof(messageGo));
 
+   sprintf(messageGo, "list");
+   for(iterator = first; iterator != NULL; iterator = iterator->Next)
+   {
+      strcat(messageGo, "|");
+      strcat(messageGo, iterator->user_id);
+   }
+
+   for(iterator = first; iterator != NULL; iterator = iterator->Next)
+   {
+      write(iterator->cli_sockfd, messageGo, sizeof(messageGo));
+   }
 }
 
 // Client to Server:
@@ -48,7 +57,7 @@ void broadcast_list_user()
 // - send message:
 // -> message|dari|isi_pesan
 
-void* myThread(Client *mc)
+void* myThread(void *mc)
 {
    Client *myClient = (Client*) mc;
    Client *iterator;
@@ -57,6 +66,7 @@ void* myThread(Client *mc)
    char messageGo[8192];
    char *mode;
    char *from;
+   char *dest;
    char *content;
 
    int sizeMessage;
@@ -67,7 +77,7 @@ void* myThread(Client *mc)
       bar1 = bar2 = 0;
       messageCome[sizeMessage] = '\0';
 
-      int i;
+      int i, size;
       for (i = 0; i < sizeMessage; i++)
       {
          if(messageCome[i] == '|')
@@ -79,8 +89,75 @@ void* myThread(Client *mc)
          mode[i] = messageCome[i];
       }
       mode[i] = '\0';
+
+      if(strcmp(mode, "set_username") == 0)
+      {
+         for(i = bar1; i < sizeMessage; i++)
+         {
+            myClient->user_id[i - bar1] = messageCome[i];
+         }
+         myClient->user_id[i - bar1] = '\0';
+         printf("Set username for: %s with sock: %d\n", myClient->user_id, myClient->cli_sockfd);
+
+         broadcast_list_user();
+      }
+      else if(strcmp(mode, "send") == 0)
+      {
+         for(i = bar1; i < sizeMessage; i++)
+         {
+            if(messageCome[i] == '|')
+            {
+               bar2 = i + 1;
+               break;
+            }
+
+            dest[i - bar1] = messageCome[i];
+         }
+         dest[i - bar1] = '\0';
+
+         for (i = bar2; i < sizeMessage; i++)
+         {
+            content[i - bar2] = messageCome[i];
+         }
+         content[i - bar2] = '\0';
+
+         memset(messageGo, '\0', sizeof(messageGo));
+         sprintf(messageGo, "message|");
+         strcat(messageGo, myClient->user_id);
+         strcat(messageGo, "|");
+         strcat(messageGo, content);
+
+         for(iterator = first; iterator != NULL; iterator = iterator->Next)
+         {
+            if(strcmp(iterator->user_id, dest) == 0)
+            {
+               write(iterator->cli_sockfd, messageGo, sizeof(messageGo));
+               printf("%s send message: %s to %s, Success\n", myClient->user_id, content, dest);
+               break;
+            }
+         }
+      }
    }
 
+   // ketika ada yg offline (return value of sizeMessage < 0)
+   printf("%s has been disconnected\n", myClient->user_id);
+   if(myClient == first)
+   {
+      first = first->Next;
+      if(first != NULL)
+         first->Prev = NULL;
+   }
+   else
+   {
+      myClient->Prev->Next = myClient->Next;
+      if(myClient == last)
+         last = myClient->Prev;
+   }
+   free(myClient);
+
+   broadcast_list_user();
+
+   return NULL;
 }
 
 int main( int argc, char *argv[] )
@@ -122,6 +199,7 @@ int main( int argc, char *argv[] )
    while(1)
    {
       // terima koneksi dari client
+      printf("Waiting for client\n");
       newsockfd = accept(sockfd, (struct sockaddr *)&cli_addr, &clilen);
       if (newsockfd < 0)
       {
@@ -130,7 +208,7 @@ int main( int argc, char *argv[] )
       }
       else
       {
-         printf("New client has connected\n");
+         printf("New client %d has connected\n", newsockfd);
       }
 
       // buat struct clientnya
@@ -152,7 +230,7 @@ int main( int argc, char *argv[] )
       newCli->Next = NULL;
 
       // buat threadnya
-      pthread_create(&ThreadClient, NULL, myThread, newCli);
+      pthread_create(&ThreadClient, NULL, myThread, (void*)newCli);
    }
    
    /* If connection is established then start communicating */
