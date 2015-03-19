@@ -27,9 +27,60 @@ typedef struct Client
 Client *first;
 Client *last;
 
-void* myThread(Client *myClient)
+char *getMode(char messageCome[], int size)
 {
    
+}
+
+void broadcast_list_user()
+{
+
+}
+
+// Client to Server:
+// - set username:
+// -> set_username|user_name
+// - send message:
+// -> send|tujuan|isi_pesan
+// Server to Client:
+// - List User Online
+// -> list|user1|user2|....
+// - send message:
+// -> message|dari|isi_pesan
+
+void* myThread(Client *mc)
+{
+   Client *myClient = (Client*) mc;
+   Client *iterator;
+
+   char messageCome[8192];
+   char messageGo[8192];
+   char *mode;
+   char *from;
+   char *content;
+
+   int sizeMessage;
+   int bar1, bar2;
+
+   while((sizeMessage = read(myClient->cli_sockfd, messageCome, sizeof(messageCome) - 1)) > 0)
+   {
+      bar1 = bar2 = 0;
+      messageCome[sizeMessage] = '\0';
+
+      int i;
+      for (i = 0; i < sizeMessage; i++)
+      {
+         if(messageCome[i] == '|')
+         {
+            bar1 = i + 1;
+            break;
+         }
+
+         mode[i] = messageCome[i];
+      }
+      mode[i] = '\0';
+   }
+
 }
 
 int main( int argc, char *argv[] )
