@@ -11,5 +11,8 @@ package my.chatapplication;
  * @author KIJ
  */
 public class DES {
-
+    private String plainText;
+    public DES(String input){
+        this.plainText = input;
+    }
 }
