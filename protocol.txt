@@ -2,13 +2,13 @@ Port: 7777
 
 Client to Server:
 - set username:
- -> set_username|user_name
+ -> set_username|<user_name>
 - send message:
- -> send|tujuan|isi_pesan
+ -> send|<tujuan>|<isi_pesan>
 
 
 Server to Client:
 - List User Online
- -> list|user1|user2|....
+ -> list|<user1>|<user2>|....
 - send message:
- -> message|dari|isi_pesan
+ -> message|<dari>|<isi_pesan>
