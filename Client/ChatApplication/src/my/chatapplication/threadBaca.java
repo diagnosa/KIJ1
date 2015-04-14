@@ -48,7 +48,8 @@ public class threadBaca extends Thread {
                 bytesRead = dis.read(messageByte);
                 mesg = new String(messageByte, 0, bytesRead);
                 System.out.println(this.mesg);
-                String[] isi = this.mesg.split("|");
+                //String[] isi = this.mesg.split("|");
+                String[] isi = getContent(this.mesg);
                 if ("list".equals(isi[0])) {
                     for (int i = 1; i < isi.length; i++) {
                         this.listOnline.add(isi[i]);
@@ -61,5 +62,25 @@ public class threadBaca extends Thread {
         } catch (IOException ex) {
             this.messageLabel.append("failed to receive from server");
         }
+    }
+    
+    private String[] getContent(String mesg)
+    {
+        String[] content = new String[100];
+        int size = mesg.length();
+        int j = 0;
+        content[j] = "";
+        for(int i = 0; i < size; i++)
+        {
+            if(mesg.charAt(i) == '|')
+            {
+                j++;
+                content[j] = "";
+                continue;
+            }
+            
+            content[j] += mesg.charAt(i);
+        }
+        return content;
     }
 }
