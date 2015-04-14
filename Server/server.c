@@ -44,6 +44,8 @@ void broadcast_list_user()
    {
       write(iterator->cli_sockfd, messageGo, sizeof(messageGo));
    }
+
+   printf("MG size: %d||MS: %s\n", strlen(messageGo), messageGo);
 }
 
 // Client to Server:

@@ -38,7 +38,7 @@ public class ChatApplicationUI extends javax.swing.JFrame {
         label1 = new java.awt.Label();
         list1 = new java.awt.List();
         BtnSend = new java.awt.Button();
-        online = new javax.swing.JLabel();
+        status = new javax.swing.JLabel();
         alamatServer = new javax.swing.JTextField();
         receiver = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -83,7 +83,7 @@ public class ChatApplicationUI extends javax.swing.JFrame {
             }
         });
 
-        online.setText("Offline");
+        status.setText("Status: Offline");
 
         alamatServer.setText("localhost");
         alamatServer.addActionListener(new java.awt.event.ActionListener() {
@@ -114,7 +114,7 @@ public class ChatApplicationUI extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                                .addComponent(online)
+                                .addComponent(status)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(BtnConnect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(list1, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
@@ -151,7 +151,7 @@ public class ChatApplicationUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(BtnConnect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(online))
+                                    .addComponent(status))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -166,7 +166,7 @@ public class ChatApplicationUI extends javax.swing.JFrame {
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pesan, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         BtnConnect.getAccessibleContext().setAccessibleDescription("");
@@ -201,7 +201,7 @@ public class ChatApplicationUI extends javax.swing.JFrame {
         connectTo(7777);
         if (this.con == 1) {
             try {
-                this.online.setText("online");
+                status.setText("Status: Online");
                 out.write(setUser.getBytes());
                 tb = new threadBaca(server, con, list1, messageLabel);
                 tb.run();
@@ -222,7 +222,7 @@ public class ChatApplicationUI extends javax.swing.JFrame {
     private void BtnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSendActionPerformed
         try {
             // TODO add your handling code here:
-            String mesg = receiver.getText() + "|" + pesan.getText();
+            String mesg = "send|" + receiver.getText() + "|" + pesan.getText();
             out.write(mesg.getBytes());
             pesan.setText("");
         } catch (IOException ex) {
@@ -290,9 +290,9 @@ public class ChatApplicationUI extends javax.swing.JFrame {
     private java.awt.Label label1;
     private java.awt.List list1;
     private javax.swing.JTextArea messageLabel;
-    private javax.swing.JLabel online;
     private javax.swing.JTextField pesan;
     private javax.swing.JTextField receiver;
+    private javax.swing.JLabel status;
     private javax.swing.JTextField usernameForm;
     // End of variables declaration//GEN-END:variables
 }
