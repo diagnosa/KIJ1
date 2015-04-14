@@ -5,11 +5,10 @@
  */
 package my.chatapplication;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.net.Proxy;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -90,7 +89,7 @@ public class ChatApplicationUI extends javax.swing.JFrame {
 
         online.setText("Offline");
 
-        alamatServer.setText("alamat server");
+        alamatServer.setText("localhost");
         alamatServer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 alamatServerActionPerformed(evt);
@@ -171,7 +170,7 @@ public class ChatApplicationUI extends javax.swing.JFrame {
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pesan, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         BtnConnect.getAccessibleContext().setAccessibleDescription("");
@@ -202,8 +201,14 @@ public class ChatApplicationUI extends javax.swing.JFrame {
     private void BtnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConnectActionPerformed
         // TODO add your handling code here:
         username = usernameForm.getText();
+        setUser =  "set_username|" + username;
         connectTo(7777);
-        if(this.con==1){
+        if (this.con == 1) {
+            try {
+                out.write(setUser.getBytes());
+            } catch (IOException ex) {
+                Logger.getLogger(ChatApplicationUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
             tb = new threadBaca(server, con, list1, messageLabel);
             tb.run();
         }
@@ -227,17 +232,17 @@ public class ChatApplicationUI extends javax.swing.JFrame {
             pesan.setText("unable to send");
         }
     }//GEN-LAST:event_BtnSendActionPerformed
-    
-    public void connectTo(int port){
+
+    public void connectTo(int port) {
         try {
             server = new Socket(alamatServer.getText(), port);
-            out = new ByteArrayOutputStream(server.getReceiveBufferSize());
-            OutputStreamWriter ous = new OutputStreamWriter(server.getOutputStream());
-            this.con=1;
-            } catch (IOException ex) {
+            out = new DataOutputStream(server.getOutputStream());
+            this.con = 1;
+        } catch (IOException ex) {
             this.con = 0;
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -273,8 +278,9 @@ public class ChatApplicationUI extends javax.swing.JFrame {
         });
     }
     private String username;
+    private String setUser;
     public Socket server;
-    public ByteArrayOutputStream out;
+    public DataOutputStream out;
     private threadBaca tb;
     private int con;
     // Variables declaration - do not modify//GEN-BEGIN:variables
