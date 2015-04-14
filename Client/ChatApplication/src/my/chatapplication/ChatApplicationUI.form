@@ -129,7 +129,7 @@
                           <Component id="pesan" min="-2" pref="47" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="60" max="32767" attributes="0"/>
+                  <EmptySpace pref="64" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -191,7 +191,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="alamatServer">
           <Properties>
-            <Property name="text" type="java.lang.String" value="alamat server"/>
+            <Property name="text" type="java.lang.String" value="localhost"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="alamatServerActionPerformed"/>

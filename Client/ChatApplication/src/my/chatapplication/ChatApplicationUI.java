@@ -5,15 +5,9 @@
  */
 package my.chatapplication;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.Proxy;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -91,7 +85,7 @@ public class ChatApplicationUI extends javax.swing.JFrame {
 
         online.setText("Offline");
 
-        alamatServer.setText("alamat server");
+        alamatServer.setText("localhost");
         alamatServer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 alamatServerActionPerformed(evt);
@@ -172,7 +166,7 @@ public class ChatApplicationUI extends javax.swing.JFrame {
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pesan, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         BtnConnect.getAccessibleContext().setAccessibleDescription("");
@@ -207,6 +201,7 @@ public class ChatApplicationUI extends javax.swing.JFrame {
         connectTo(7777);
         if (this.con == 1) {
             try {
+                this.online.setText("online");
                 out.write(setUser.getBytes());
                 tb = new threadBaca(server, con, list1, messageLabel);
                 tb.run();
