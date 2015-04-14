@@ -64,10 +64,10 @@ void* myThread(void *mc)
 
    char messageCome[8192];
    char messageGo[8192];
-   char *mode;
-   char *from;
-   char *dest;
-   char *content;
+   char mode[8192];
+   char from[8192];
+   char dest[8192];
+   char content[8192];
 
    int sizeMessage;
    int bar1, bar2;
