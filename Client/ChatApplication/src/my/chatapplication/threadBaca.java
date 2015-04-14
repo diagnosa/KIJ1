@@ -27,6 +27,8 @@ public class threadBaca extends Thread {
     private DataInputStream dis;
     private List listOnline;
     private JTextArea messageLabel;
+    private byte[] messageByte = new byte[1000];
+    private int bytesRead;
 
     public threadBaca(Socket sockcli, int connect, List listOnline, JTextArea messageLabel) {
         this.connStatus = connect;
@@ -42,7 +44,9 @@ public class threadBaca extends Thread {
             System.out.println(this.connStatus);
             while (connStatus == 1) {
                 System.out.println("64564");
-                this.mesg = dis.readLine();
+                //this.mesg = dis.readLine();
+                bytesRead = dis.read(messageByte);
+                mesg = new String(messageByte, 0, bytesRead);
                 System.out.println(this.mesg);
                 String[] isi = this.mesg.split("|");
                 if ("list".equals(isi[0])) {
