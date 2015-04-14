@@ -202,7 +202,7 @@ public class ChatApplicationUI extends javax.swing.JFrame {
     private void BtnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConnectActionPerformed
         // TODO add your handling code here:
         username = usernameForm.getText();
-        connectTo(6666);
+        connectTo(7777);
         if(this.con==1){
             tb = new threadBaca(server, con, list1, messageLabel);
             tb.run();
