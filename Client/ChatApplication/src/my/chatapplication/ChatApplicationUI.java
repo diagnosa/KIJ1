@@ -7,6 +7,7 @@ package my.chatapplication;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.Proxy;
@@ -202,10 +203,16 @@ public class ChatApplicationUI extends javax.swing.JFrame {
     private void BtnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConnectActionPerformed
         // TODO add your handling code here:
         username = usernameForm.getText();
-        connectTo(6666);
-        if(this.con==1){
-            tb = new threadBaca(server, con, list1, messageLabel);
-            tb.run();
+        setUser =  "set_username|" + username;
+        connectTo(7777);
+        if (this.con == 1) {
+            try {
+                out.write(setUser.getBytes());
+                tb = new threadBaca(server, con, list1, messageLabel);
+                tb.run();
+            } catch (IOException ex) {
+                
+            }
         }
     }//GEN-LAST:event_BtnConnectActionPerformed
 
@@ -231,10 +238,9 @@ public class ChatApplicationUI extends javax.swing.JFrame {
     public void connectTo(int port){
         try {
             server = new Socket(alamatServer.getText(), port);
-            out = new ByteArrayOutputStream(server.getReceiveBufferSize());
-            OutputStreamWriter ous = new OutputStreamWriter(server.getOutputStream());
-            this.con=1;
-            } catch (IOException ex) {
+            out = new DataOutputStream(server.getOutputStream());
+            this.con = 1;
+        } catch (IOException ex) {
             this.con = 0;
         }
     }
@@ -273,8 +279,9 @@ public class ChatApplicationUI extends javax.swing.JFrame {
         });
     }
     private String username;
+    private String setUser;
     public Socket server;
-    public ByteArrayOutputStream out;
+    public DataOutputStream out;
     private threadBaca tb;
     private int con;
     // Variables declaration - do not modify//GEN-BEGIN:variables
