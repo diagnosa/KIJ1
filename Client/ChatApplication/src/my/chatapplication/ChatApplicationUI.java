@@ -204,7 +204,7 @@ public class ChatApplicationUI extends javax.swing.JFrame {
                 status.setText("Status: Online");
                 out.write(setUser.getBytes());
                 tb = new threadBaca(server, con, list1, messageLabel);
-                tb.run();
+                tb.start();
             } catch (IOException ex) {
                 
             }
