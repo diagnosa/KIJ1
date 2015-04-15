@@ -99,7 +99,8 @@ void* myThread(void *mc)
             myClient->user_id[i - bar1] = messageCome[i];
          }
          myClient->user_id[i - bar1] = '\0';
-         printf("Set username for: %s with sock: %d\n", myClient->user_id, myClient->cli_sockfd);
+
+         printf("new user_name: %s\n", myClient->user_id);
 
          broadcast_list_user();
       }

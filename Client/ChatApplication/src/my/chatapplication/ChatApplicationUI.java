@@ -69,6 +69,11 @@ public class ChatApplicationUI extends javax.swing.JFrame {
         label1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         label1.setText("User Online");
 
+        list1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                list1ItemStateChanged(evt);
+            }
+        });
         list1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 list1ActionPerformed(evt);
@@ -166,7 +171,7 @@ public class ChatApplicationUI extends javax.swing.JFrame {
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pesan, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         BtnConnect.getAccessibleContext().setAccessibleDescription("");
@@ -223,12 +228,20 @@ public class ChatApplicationUI extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             String mesg = "send|" + receiver.getText() + "|" + pesan.getText();
+            this.messageLabel.append("me : " + pesan.getText()+"\n");
+            byte[] plaintext = new byte[500000];
+            plaintext = mesg.getBytes();
             out.write(mesg.getBytes());
             pesan.setText("");
         } catch (IOException ex) {
             pesan.setText("unable to send");
         }
     }//GEN-LAST:event_BtnSendActionPerformed
+
+    private void list1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_list1ItemStateChanged
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_list1ItemStateChanged
     
     public void connectTo(int port){
         try {
